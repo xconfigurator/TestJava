@@ -1,7 +1,9 @@
 package cn.edu.hebau.liuyang.concurrency;
 
 /**
- * 同步方法和非同步方法是否可以同时调用？ 在执行m1的时候m2能否被执行 答：可以！同步方法运行的过程中非同步方法是可以运行的。非同步方法不需要申请锁。
+ * 同步方法和非同步方法是否可以同时调用？ <br>
+ * 在执行m1的时候m2能否被执行 <br>
+ * 答：可以！同步方法运行的过程中非同步方法是可以运行的。非同步方法不需要申请锁。
  * 
  * @author liuyang
  *
@@ -18,7 +20,7 @@ public class T002 {
 		System.out.println(Thread.currentThread().getName() + " m1 end");
 	}
 
-	public void m2() {
+	public void m2() {// 并不需要锁定this
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
@@ -32,12 +34,12 @@ public class T002 {
 
 		// 以下两组效果等价, t2 m2会在t1运行期间打印出来。
 		// 写法1 JDK 8+
-//		new Thread(() -> t.m1(), "t1").start();
-//		new Thread(() -> t.m2(), "t2").start();
+		// new Thread(() -> t.m1(), "t1").start();
+		// new Thread(() -> t.m2(), "t2").start();
 
 		// 写法2 JDK 8+
-//		new Thread(t::m1, "t1").start();
-//		new Thread(t::m2, "t2").start();
+		// new Thread(t::m1, "t1").start();
+		// new Thread(t::m2, "t2").start();
 
 		// 写法3 JDK 7及以前
 		new Thread(new Runnable() {

@@ -3,9 +3,9 @@ package cn.edu.hebau.liuyang.concurrency;
 import java.util.concurrent.TimeUnit;
 
 /**
- * 对业务写方法加锁
- * 对业务读方法不加锁
- * 容易产生脏读问题（Dirty Read）// liuyang: 个人认为这个不叫“脏读”
+ * 对业务写方法加锁，对业务读方法不加锁<br>
+ * 容易产生脏读问题（Dirty Read）// liuyang: 个人认为这个不叫“脏读”<br>
+ * 处理：在读方法上也加相同的锁。
  * 场景：银行
  * @author liuyang
  *
