@@ -25,17 +25,19 @@ import java.util.concurrent.TimeUnit;
  */
 public class T007Volatile {
 	
-	// 这个是Java“挑战”操作系统原理中“线程天然共享内存”的说法。其实也不算挑战，应该就是JVM具体实现方法所致。
+	// 这个是Java“挑战”操作系统原理中“线程天然共享内存”的说法。其实也不算挑战，应该就是JVM具体实现方法（JMM：Java Memory Model）所致。
 	// 增加volatile，在线程间共享该变量，与操作系统原理中描述的一致。
-	//volatile boolean running = true;
+	volatile boolean running = true;
 	// 如果不加volatile，则Java会为每个线程维护一份拷贝。
-	boolean running = true;
+	//boolean running = true;
 	
 	void m() {
 		System.out.println("m start");
 		while (running) {
 			// 实测，如果增加下面这段睡眠代码，在不加volatile情况下也能停止。
-			// 老马没说这段，咋解释？！
+			// 解释: running会被放入CPU的Cache。如果不加这段休眠代码，Cache无法刷新，造成堆中数据修改，但t1无法感知。
+			// 加了这段代码后，Cache刷新了，实际上也就达到了
+			// 而增加volatile的机制是，一旦堆中数据发生改变，会通知其他线程，强制更新相关缓存。
 			/*
 			try {
 				TimeUnit.SECONDS.sleep(1);
@@ -53,6 +55,7 @@ public class T007Volatile {
 		
 		TimeUnit.SECONDS.sleep(1);
 		
+		// 在main线程中将堆中t对象里的running设置为false。
 		t.running = false;
 		// 本意是想停止线程运行的。但在不加volatile的情况下无效。加了才会达到预期。
 		// 实测
