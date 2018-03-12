@@ -36,6 +36,8 @@ public class T006 {
 	public static void main(String[] args) {
 		T006 t = new T006();
 		new Thread(t::m, "t1").start();
+		// 如果抛出异常后锁不被释放，则后面两个线程永远不会获得处理机
+		// 至于t1抛出异常后是t2获得处理机还是t3获得处理机要看当时的调度。实测两次都是t3活得处理机。
 		new Thread(t::m, "t2").start();
 		new Thread(t::m, "t3").start();
 	}
