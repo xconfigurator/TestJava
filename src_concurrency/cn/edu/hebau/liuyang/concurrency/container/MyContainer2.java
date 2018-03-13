@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
  * 改进：wait，notify。<br>
  * 分析：MyContainer1中，通过添加volatile虽然能够完成要求，但t2线程中的死循环很浪费CPU，如果不用死循环怎么做？<br>
  * 注意：<br>
- * 1. wait会释放锁，而notify不会释放<br>
+ * 1. wait会释放锁，而notify不会释放。wait和notify都是通过对同一对象上的锁进行操作的。<br>
  * 2. 这种运行方法，必须保证t2先执行，也就是首先让t2监听才可以<br>
  * 3. notify之后t1必须释放锁，t2退出后也必须nofity通知t1，t1才能继续执行<br>
  * 

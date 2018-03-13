@@ -3,6 +3,8 @@ package cn.edu.hebau.liuyang.concurrency.container;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,7 +17,7 @@ import java.util.concurrent.TimeUnit;
  * 说明：使用Latch（门闩）替代wait/notify来进行通知，好处是通信方式简单，同时也可以指定等待时间<br>
  * CountDownLatch不涉及锁定，当count的值为0时当前线程继续运行。<br>
  * 当不涉及同步，只涉及线程通信的时候，用synchronized + wait/notify就显得太重了<br>
- * 这时应该考虑countdownlatch/cyclicbarrier/semaphore
+ * 这时应该考虑CountDownLatch/CyclicBarrier/Semaphore
  * 注意：这种运行方法，必须保证t2先执行，也就是首先让t2监听才可以<br>
  * 
  * @author liuyang
@@ -36,7 +38,7 @@ public class MyContainer3 {
 	public static void main(String[] args) throws InterruptedException {
 		MyContainer3 c = new MyContainer3();
 		
-		CountDownLatch latch = new CountDownLatch(1);
+		CountDownLatch latch = new CountDownLatch(1); 
 		
 		// 线程t2
 		new Thread(()->{
