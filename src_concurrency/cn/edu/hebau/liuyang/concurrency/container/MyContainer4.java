@@ -22,9 +22,9 @@ public class MyContainer4<T> {
 	public synchronized void put(T t) {
 
 		// 1. 满则等待
-		while (list.size() == MAX) {// 注意是while而不是if。生产者-消费者情景下肯定是while
+		while (list.size() == MAX) {// 注意是while而不是if。生产者-消费者情景下肯定是while。
 			try {
-				this.wait();
+				this.wait();// 参考《Effective Java》： wait一般都是和while配合，而不是和if。
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

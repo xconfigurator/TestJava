@@ -38,7 +38,7 @@ public class MyContainer3 {
 	public static void main(String[] args) throws InterruptedException {
 		MyContainer3 c = new MyContainer3();
 		
-		CountDownLatch latch = new CountDownLatch(1); 
+		CountDownLatch latch = new CountDownLatch(1);
 		
 		// 线程t2
 		new Thread(()->{

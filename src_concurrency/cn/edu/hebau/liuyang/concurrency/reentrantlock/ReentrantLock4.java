@@ -5,6 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * ReentrantLock<br>
  * 公平锁<br>
+ * 默认情况下是非公平锁，synchronized加的也是非公平锁。<br>
  * 
  * 在使用synchronized的情况下由于m1锁定this，只有m1执行完毕的时候m2才能执行。<br>
  * 
@@ -25,7 +26,7 @@ public class ReentrantLock4 extends Thread{
 	@Override
 	public void run() {
 		for (int i = 0; i < 100; i++) {
-			lock.lock();
+			lock.lock();// 在非公平锁的情况下下次申请到锁的人有可能还是它，但如果是公平锁，则会调度给其他线程获得锁从而得到执行机会。
 			System.out.println(Thread.currentThread().getName() + "获得锁");
 			lock.unlock();
 		}
@@ -33,8 +34,8 @@ public class ReentrantLock4 extends Thread{
 	
 	public static void main(String[] args) {
 		ReentrantLock4 r = new ReentrantLock4();
-		Thread t1 = new Thread();
-		Thread t2 = new Thread();
+		Thread t1 = new Thread(r);
+		Thread t2 = new Thread(r);
 		t1.start();
 		t2.start();
 	}
