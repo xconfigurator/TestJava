@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * 编写一个固定容量的同步容器，拥有put和get方法，以及getCount方法。<br>
  * 能够支持2个生产者线程以及10个消费者线程的阻塞调用。<br>
  * 
- * 使用wait和notify/notifyAll来实现。<br>
+ * 使用synchronized,wait和notify/notifyAll来实现。<br>
  * 
  * @author liuyang
  *
@@ -22,9 +22,11 @@ public class MyContainer4<T> {
 	public synchronized void put(T t) {
 
 		// 1. 满则等待
-		while (list.size() == MAX) {// 注意是while而不是if。生产者-消费者情景下肯定是while。
+		while (list.size() == MAX) {// 陷阱1：注意是while而不是if。生产者-消费者情景下肯定是while。
 			try {
 				this.wait();// 参考《Effective Java》： wait一般都是和while配合，而不是和if。
+				// 注意1： wait是释放锁的
+				// 注意2：如果使用while则本线程被notify之后还会继续先判断一下while的条件再向下执行。
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -35,7 +37,9 @@ public class MyContainer4<T> {
 		++count;
 
 		// 3. 通知
-		this.notifyAll();// 通知消费者线程进行消费
+		this.notifyAll();// 陷阱2：使用notifyAll()而不是notify()。通知消费者线程进行消费
+		// 因为如果用notify()很可能唤醒的是一个生产者。
+		// 《Effective Java》建议永远使用notifyAll();而不是notify();
 	}
 
 	public synchronized T get() {
