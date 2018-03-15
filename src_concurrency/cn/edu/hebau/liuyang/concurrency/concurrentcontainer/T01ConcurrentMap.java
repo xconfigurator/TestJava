@@ -15,8 +15,8 @@ public class T01ConcurrentMap {
 	public static void main(String[] args) {
 		// 一堆Map
 		Map<String, String> map;
-		map = new ConcurrentHashMap<>();// 96ms 58ms 41ms 60ms
-//		map = new ConcurrentSkipListMap<>();// 83ms 86ms
+		map = new ConcurrentHashMap<>();// 96ms 58ms 41ms 60ms // 把大锁分成了小锁。分成了16份。
+//		map = new ConcurrentSkipListMap<>();// 83ms 86ms // 高并发且排序
 //		map = new Hashtable<>();// 50ms 45ms
 //		map = new HashMap<>();// 190ms 104ms // 可以使用Collections.synchronizedXXXX加锁
 //		map = new TreeMap<>();// 抛异常，还死机
