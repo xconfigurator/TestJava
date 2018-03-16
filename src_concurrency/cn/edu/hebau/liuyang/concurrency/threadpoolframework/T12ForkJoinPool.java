@@ -85,19 +85,26 @@ public class T12ForkJoinPool {
 		System.out.println("" + Arrays.stream(nums).sum());// Java Stream API since JDK 8
 		
 		
-		// 方法2 ForkJoinPool
+		// 方法2 ForkJoinPool - RecursiveAction
+		/*
 		ForkJoinPool fjp = new ForkJoinPool(); // 整个递归过程由ForkJoinPool来维护。
-		// 2.1 RecursiveAction
-//		AddRecursiveAction task = new AddRecursiveAction(0, nums.length);
-//		fjp.execute(task);
-		// 2.2 RecursiveTask
+		AddRecursiveAction task = new AddRecursiveAction(0, nums.length);
+		fjp.execute(task);
+		// 后台启动守护进程进行计算....
+		// 想要看到输出就需要阻塞
+		System.in.read();
+		*/
+		
+		
+		// 方法2 ForkJoinPool - RecursiveTask
+		ForkJoinPool fjp = new ForkJoinPool(); // 整个递归过程由ForkJoinPool来维护。
 		AddRecursiveTask task = new AddRecursiveTask(0, nums.length);
 		fjp.execute(task);
 		long result = task.join();
 		System.out.println(result);// 49506146
-		
 		// 后台启动守护进程进行计算....
 		// 想要看到输出就需要阻塞
 		System.in.read();
+		
 	}
 }
