@@ -9,6 +9,18 @@ public class Student {
 	@Field(columnName = "age", type = "int", length = 10)
 	private int age;
 
+	// 一个JavaBean要有无参构造方法，方便通过反射实例化。
+	public Student() {
+		
+	}
+	
+	public Student(int id, String studentName, int age) {
+		super();
+		this.id = id;
+		this.studentName = studentName;
+		this.age = age;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -33,4 +45,8 @@ public class Student {
 		this.age = age;
 	}
 
+	@Override
+	public String toString() {
+		return "Student [id=" + id + ", studentName=" + studentName + ", age=" + age + "]";
+	}
 }
