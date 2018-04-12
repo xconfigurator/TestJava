@@ -1,12 +1,18 @@
 package cn.edu.hebau.liuyang;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+
+import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 public class HelloScriptEngine {
 
-	public static void main(String[] args) throws ScriptException {
+	public static void main(String[] args) throws ScriptException, NoSuchMethodException, IOException {
 		// 获取脚本引擎对象
 		ScriptEngineManager sem = new ScriptEngineManager();
 		ScriptEngine engine = sem.getEngineByName("javascript");
@@ -28,7 +34,24 @@ public class HelloScriptEngine {
 		
 		
 		System.out.println("#定义函数###############################################");
+		// 在JavaScript中定义函数，在Java中使用
+		engine.eval("function add(a,b) {var sum = a + b; return sum;}");
+		Invocable jsInvoke = (Invocable) engine;
+		Object result1 = jsInvoke.invokeFunction("add", 2, 2);
+		System.out.println(result1);
 		
+		
+		System.out.println("#神奇的###############################################");
+		// 这段有问题
+		//engine.eval("importPackage(java.util); var list = Arrays.asList([\"四中\", \"河北农业大学\"]);");
+		System.out.println(engine.get("msg"));// msg还在
+		
+		
+		System.out.println("#执行js###############################################");
+		URL url = HelloScriptEngine.class.getClassLoader().getResource("HelloScriptEngine.js");
+		FileReader reader = new FileReader(url.getPath());
+		engine.eval(reader);
+		reader.close();
 	}
 
 }
