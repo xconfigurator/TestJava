@@ -1,4 +1,4 @@
-package cn.edu.hebau.liuyang;
+package cn.edu.hebau.liuyang.lambda;
 
 interface IMessage {
 	int doSomeCalc(int x, int y);

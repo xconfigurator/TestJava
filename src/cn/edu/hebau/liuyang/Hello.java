@@ -12,7 +12,7 @@ import java.util.PriorityQueue;
 public class Hello {
 	
 	static int a[] = { 9, 8, 7, 6, 5, 11, 12 ,13,14 ,88, 99 };
-
+	
 	public static void main(String[] args) {
 		// 小顶堆
 		PriorityQueue<Integer> heapMin = new PriorityQueue<>();
