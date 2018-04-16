@@ -7,6 +7,11 @@ import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 import java.util.concurrent.RecursiveTask;
 
+/**
+ * 计算1000000个100以内随机整数的和
+ * @author liuyang
+ *
+ */
 public class T12ForkJoinPool {
 	static int[] nums = new int[1000000];
 	static final int MAX_NUM = 50000;		// 每个分片不超过50000
@@ -82,8 +87,8 @@ public class T12ForkJoinPool {
 	
 	public static void main(String[] args) throws IOException {
 		// 方法1
-		System.out.println("" + Arrays.stream(nums).sum());// Java Stream API since JDK 8
-		
+		//System.out.println("" + Arrays.stream(nums).sum());// Java Stream API since JDK 8
+		System.out.println("" + Arrays.stream(nums).parallel().sum());
 		
 		// 方法2 ForkJoinPool - RecursiveAction
 		/*
@@ -100,11 +105,17 @@ public class T12ForkJoinPool {
 		ForkJoinPool fjp = new ForkJoinPool(); // 整个递归过程由ForkJoinPool来维护。
 		AddRecursiveTask task = new AddRecursiveTask(0, nums.length);
 		fjp.execute(task);
+		long result = fjp.invoke(task);
+		System.out.println(result);
+		fjp.shutdown();
+		
+		/*
 		long result = task.join();
 		System.out.println(result);// 49506146
 		// 后台启动守护进程进行计算....
 		// 想要看到输出就需要阻塞
 		System.in.read();
-		
+		fjp.shutdown();
+		*/
 	}
 }
