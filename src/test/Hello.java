@@ -1,28 +1,23 @@
 package test;
 
-import java.io.IOException;
+import java.time.ZoneId;
+import java.util.Set;
 
 public class Hello {
-	
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return super.toString();
-	}
 
-	public static void main(String[] args) throws IOException {
-		
-		// 环境变量
-		System.out.println(System.getenv());
-		
-		// 系统属性
-		System.out.println(System.getProperties());
-		System.out.println(System.getProperty("os.name"));					 // Windows 10
-		System.out.println(System.getProperty("os.arch"));					 // amd64
-		System.out.println(System.getProperty("os.version"));				 // 10
-		System.out.println(System.getProperty("java.class.path"));			 // F:\workspaces\workspace_oxygen\TestJava\bin
-		System.out.println(System.getProperty("java.specification.version"));//	1.8
+	public static void main(String[] args) {
 
+		// 定义线程动作 JDK 8之前
+        Runnable r1 = new Runnable() {
+
+			@Override
+			public void run() {
+				System.out.println("使用Lambda之前的方法");
+			}
+        	
+        };
+        
+        // 定义线程动作 JDK 8 Lambda E
 	}
 
 }
