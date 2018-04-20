@@ -3,6 +3,9 @@ package cn.edu.hebau.liuyang.lambda;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+
+import cn.edu.hebau.liuyang.lambda.LambdaExercise01.Employee;
 
 /**
  * 练习1： 自定义排序规则
@@ -30,6 +33,12 @@ public class LambdaExercise01 {
 		});
 		
 		emps.forEach(System.out::println);
+		
+		
+		Function<Integer, Employee> fun = (x) -> new Employee(x);
+		Function<Integer, Employee> fun2 = Employee::new;// 这个调用的是一个参数的构造器。
+		System.out.println(fun2.apply(444));
+		
 	}
 
 	static class Employee {
@@ -37,6 +46,11 @@ public class LambdaExercise01 {
 		private int age;
 		private String name;
 		private double salary;
+		
+		public Employee(int id) {
+			super();
+			this.id = id;
+		}
 
 		public Employee(int id, String name,int age, double salary) {
 			super();

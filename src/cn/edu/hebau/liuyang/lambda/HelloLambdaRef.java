@@ -4,6 +4,7 @@ import java.io.PrintStream;
 import java.util.Comparator;
 import java.util.function.BiPredicate;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**
@@ -19,6 +20,8 @@ public class HelloLambdaRef {
 		methodRef();
 		System.out.println("######################################");
 		constructorRef();
+		System.out.println("######################################");
+		arrayRef();
 	}
 	
 	// 方法引用
@@ -47,12 +50,17 @@ public class HelloLambdaRef {
 		Supplier<Object> sup = () -> new Object();
 		Supplier<Object> sup2 = Object::new;
 		
-		// 注意并不一定是调用无参构造器。
+		// 注意并不一定是调用无参构造器！
 	}
 	
 	// 数组引用
 	public static void arrayRef() {
-			
+		Function<Integer, String[]> fun = (x) -> new String[x];
+		String[] strs = fun.apply(10);
+		System.out.println(strs.length);
 		
+		Function<Integer, String[]> fun1 = String[]::new;
+		String[] strs1 = fun1.apply(5);
+		System.out.println(strs1.length);
 	}
 }
