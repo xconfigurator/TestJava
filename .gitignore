@@ -24,3 +24,14 @@ bin/
 *.ipr
 *.iml
 *.iws
+
+#temp file
+*.log
+*.cache
+*.diff
+*.path
+*.tmp
+
+#system ignore
+.DS_store
+Thumbs.db
